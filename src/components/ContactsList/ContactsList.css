@@ -1,0 +1,32 @@
+.contacts__container {
+    padding-top: 50px;
+}
+
+.contacts__list {
+    background-color: white;
+}
+
+.contacts-item {
+    display: flex;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.1;
+    border: 1px solid black;
+    border-top: none;
+}
+
+.contacts-item-cell {
+    padding: 8px;
+    width: 30%;
+    border-right: 1px solid black;
+}
+
+.title-item {
+    font-weight: 600;
+    border-top: 1px solid black;
+    text-align: center;
+}
+
+.contacts-item-button {
+    width: 10%;
+}
