@@ -9,9 +9,8 @@ class Form extends React.Component {
         number: '',
 
         formError: '',
-        formValid: true
+        formValid: true,
     }
-
 
     onInputChange = (e) => {
         this.setState({
@@ -20,20 +19,12 @@ class Form extends React.Component {
         })
     }
 
-    resetForm = () => {
-        this.setState({
-            name: '',
-            surname: '',
-            number: '',
-        })
-    }
-
     onHandleSubmit = (e) => {
         e.preventDefault();
 
         if (this.state.name.length === 0 || this.state.surname.length === 0 || this.state.number.length === 0) {
             this.setState({
-                formError: 'All fields are required',
+                formError: '*All fields are required',
                 formValid: false
             });
             return;
@@ -54,43 +45,52 @@ class Form extends React.Component {
 
     render() {
         return (
-            <section className="form">
+            <section className={`${this.props.showForm === false ? 'disable' : 'form'}`} >
                 <div className="container form__container">
-                    <h2 className="form__title">
-                        Create new contact
-                    </h2>
-                    <form className="form" onSubmit={this.onHandleSubmit}>
+                    <form className="form__area" onSubmit={this.onHandleSubmit}>
+                        <h2 className="form__title">
+                            Creating new contact
+                        </h2>
                         <div className="form__input-wrapper">
-                            <input className="form__input"
-                                   value={this.state.name}
-                                   type="text"
-                                   name="name"
-                                   placeholder="Name"
-                                   onChange={this.onInputChange}
-                            />
-                            <input className="form__input"
-                                   value={this.state.surname}
-                                   type="text"
-                                   name="surname"
-                                   placeholder="Surname"
-                                   onChange={this.onInputChange}
-                            />
-                            <input className="form__input"
-                                   value={this.state.number}
-                                   type="number"
-                                   name="number"
-                                   placeholder="Phone number"
-                                   onChange={this.onInputChange}
-                            />
+                            <fieldset className="form__field">
+                                Name
+                                <input className="form__input"
+                                       value={this.state.name}
+                                       type="text"
+                                       name="name"
+                                       placeholder="Enter your name"
+                                       onChange={this.onInputChange}
+                                />
+                            </fieldset>
+                            <fieldset className="form__field">
+                                Surname
+                                <input className="form__input"
+                                       value={this.state.surname}
+                                       type="text"
+                                       name="surname"
+                                       placeholder="Enter your surname"
+                                       onChange={this.onInputChange}
+                                />
+                            </fieldset>
+                            <fieldset className="form__field">
+                                Phone number
+                                <input className="form__input"
+                                       value={this.state.number}
+                                       type="number"
+                                       name="number"
+                                       placeholder="Enter your phone number"
+                                       onChange={this.onInputChange}
+                                />
+                            </fieldset>
                         </div>
                         <div className='form__error-message'>
                             {this.state.formError}
                         </div>
                         <div className="form__button-wrapper">
                             <button className="form__submit-button button" disabled={!this.state.formValid} >
-                                OK
+                                Save
                             </button>
-                            <button className="form__cancel-button button" type="reset" onClick={this.resetForm}>
+                            <button className="form__cancel-button button" onClick={this.props.toggleForm}>
                                 Cancel
                             </button>
                         </div>

@@ -7,9 +7,7 @@ class App extends React.Component {
 
     state = {
         items: [],
-
-        // formError: '',
-        // formValid: true
+        showForm: false
     }
 
     handleAddItem = ({name, surname, number}) => {
@@ -35,6 +33,19 @@ class App extends React.Component {
         })
     }
 
+    toggleForm = () => {
+
+        if (this.state.showForm === false){
+            this.setState({
+                showForm: true
+            })
+        } else {
+            this.setState({
+                showForm: false
+            })
+        }
+    }
+
     render() {
         return (
             <>
@@ -45,10 +56,8 @@ class App extends React.Component {
                         </h1>
                     </div>
                 </header>
-
-                <ContactsList items={this.state.items} removeListItem={this.removeListItem}/>
-                <Form handleAddItem={this.handleAddItem}/>
-
+                <ContactsList items={this.state.items} toggleForm={this.toggleForm} removeListItem={this.removeListItem}/>
+                <Form handleAddItem={this.handleAddItem} toggleForm={this.toggleForm} showForm={this.state.showForm}/>
             </>
         );
     }

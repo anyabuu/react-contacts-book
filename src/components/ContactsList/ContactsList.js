@@ -3,8 +3,6 @@ import './ContactsList.css';
 
 class ContactsList extends React.Component {
 
-
-
     render() {
         return (
             <section className="contacts">
@@ -21,7 +19,6 @@ class ContactsList extends React.Component {
                                 Phone number
                             </div>
                         </li>
-
                         {this.props.items.map(item => (
                             <li className="contacts-item" key={item.id}>
                                 <div className="contacts-item-cell">
@@ -39,6 +36,9 @@ class ContactsList extends React.Component {
                             </li>
                         ))}
                     </ul>
+                    <button className="contacts__create-contact-button button" onClick={this.props.toggleForm}>
+                        Add contact
+                    </button>
                 </div>
             </section>
         );
