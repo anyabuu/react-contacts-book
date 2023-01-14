@@ -34,7 +34,6 @@ class App extends React.Component {
     }
 
     toggleForm = () => {
-
         if (this.state.showForm === false){
             this.setState({
                 showForm: true
@@ -45,6 +44,7 @@ class App extends React.Component {
             })
         }
     }
+
 
     render() {
         return (

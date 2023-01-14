@@ -1,5 +1,6 @@
 import React from "react";
 import './ContactsList.css';
+import ContactElement from "../ContactElement/ContactElement";
 
 class ContactsList extends React.Component {
 
@@ -20,20 +21,7 @@ class ContactsList extends React.Component {
                             </div>
                         </li>
                         {this.props.items.map(item => (
-                            <li className="contacts-item" key={item.id}>
-                                <div className="contacts-item-cell">
-                                    {item.name}
-                                </div>
-                                <div className="contacts-item-cell">
-                                    {item.surname}
-                                </div>
-                                <div className="contacts-item-cell">
-                                    {item.number}
-                                </div>
-                                <button className="contacts-item-button" onClick={(e) => this.props.removeListItem(e, item.id)} key={item.id}>
-                                    Х
-                                </button>
-                            </li>
+                            <ContactElement removeListItem={this.props.removeListItem} key={item.id} id={item.id} name={item.name} surname={item.surname} number={item.number}/>
                         ))}
                     </ul>
                     <button className="contacts__create-contact-button button" onClick={this.props.toggleForm}>

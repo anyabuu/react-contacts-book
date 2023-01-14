@@ -7,10 +7,10 @@ class Form extends React.Component {
         name: '',
         surname: '',
         number: '',
-
         formError: '',
         formValid: true,
     }
+
 
     onInputChange = (e) => {
         this.setState({
@@ -18,6 +18,7 @@ class Form extends React.Component {
             formValid: true
         })
     }
+
 
     onHandleSubmit = (e) => {
         e.preventDefault();
@@ -41,6 +42,20 @@ class Form extends React.Component {
             formError: '',
             formValid: true
         });
+    }
+
+    cancelForm = () => {
+
+        this.props.toggleForm()
+
+        this.setState({
+            name: '',
+            surname: '',
+            number: '',
+
+            formError: '',
+            formValid: true,
+        })
     }
 
     render() {
@@ -90,7 +105,7 @@ class Form extends React.Component {
                             <button className="form__submit-button button" disabled={!this.state.formValid} >
                                 Save
                             </button>
-                            <button className="form__cancel-button button" onClick={this.props.toggleForm}>
+                            <button type={"reset"} className="form__cancel-button button" onClick={this.cancelForm}>
                                 Cancel
                             </button>
                         </div>
