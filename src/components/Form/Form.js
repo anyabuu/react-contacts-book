@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import "./Form.css";
 
 function Form({ toggleForm, handleAddItem, showForm }) {
-  const [contact, setContact] = useState({
+  const [newContact, setNewContact] = useState({
     name: "",
-    surname: "",
-    number: "",
+    email: "",
+    phone: "",
     formError: "",
     formValid: true,
   });
 
   const onInputChange = (e) => {
-    setContact({
-      ...contact,
+    setNewContact({
+      ...newContact,
       [e.target.name]: e.target.value,
       formValid: true,
     });
@@ -22,24 +22,24 @@ function Form({ toggleForm, handleAddItem, showForm }) {
     e.preventDefault();
 
     if (
-      contact.name.length === 0 ||
-      contact.surname.length === 0 ||
-      contact.number.length === 0
+      newContact.name.length === 0 ||
+      newContact.email.length === 0 ||
+      newContact.phone.length === 0
     ) {
-      setContact({
-        ...contact,
+      setNewContact({
+        ...newContact,
         formError: "*All fields are required",
         formValid: false,
       });
       return;
     }
 
-    handleAddItem(contact);
+    handleAddItem(newContact);
 
-    setContact({
+    setNewContact({
       name: "",
-      surname: "",
-      number: "",
+      email: "",
+      phone: "",
       formError: "",
       formValid: true,
     });
@@ -48,10 +48,10 @@ function Form({ toggleForm, handleAddItem, showForm }) {
   const cancelForm = () => {
     toggleForm();
 
-    setContact({
+    setNewContact({
       name: "",
-      surname: "",
-      number: "",
+      email: "",
+      phone: "",
 
       formError: "",
       formValid: true,
@@ -68,7 +68,7 @@ function Form({ toggleForm, handleAddItem, showForm }) {
               Name
               <input
                 className="form__input"
-                value={contact.name}
+                value={newContact.name}
                 type="text"
                 name="name"
                 placeholder="Enter your name"
@@ -76,13 +76,13 @@ function Form({ toggleForm, handleAddItem, showForm }) {
               />
             </fieldset>
             <fieldset className="form__field">
-              Surname
+              Email
               <input
                 className="form__input"
-                value={contact.surname}
-                type="text"
-                name="surname"
-                placeholder="Enter your surname"
+                value={newContact.email}
+                type="email"
+                name="email"
+                placeholder="Enter your email"
                 onChange={onInputChange}
               />
             </fieldset>
@@ -90,19 +90,19 @@ function Form({ toggleForm, handleAddItem, showForm }) {
               Phone number
               <input
                 className="form__input"
-                value={contact.number}
+                value={newContact.phone}
                 type="number"
-                name="number"
+                name="phone"
                 placeholder="Enter your phone number"
                 onChange={onInputChange}
               />
             </fieldset>
           </div>
-          <div className="form__error-message">{contact.formError}</div>
+          <div className="form__error-message">{newContact.formError}</div>
           <div className="form__button-wrapper">
             <button
               className="form__submit-button button"
-              disabled={!contact.formValid}
+              disabled={!newContact.formValid}
             >
               Save
             </button>

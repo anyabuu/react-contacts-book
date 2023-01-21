@@ -9,7 +9,7 @@ function ContactsList({ items, removeListItem, toggleForm }) {
         <ul className="contacts__list">
           <li className="contacts-item title-item">
             <div className="contacts-item-cell">Name</div>
-            <div className="contacts-item-cell">Surname</div>
+            <div className="contacts-item-cell">Email</div>
             <div className="contacts-item-cell contacts-item-cell-phone">
               Phone number
             </div>
@@ -17,11 +17,11 @@ function ContactsList({ items, removeListItem, toggleForm }) {
           {items.map((item) => (
             <ContactElement
               removeListItem={removeListItem}
-              key={item.id}
+              key={crypto.randomUUID()}
               id={item.id}
               name={item.name}
-              surname={item.surname}
-              number={item.number}
+              email={item.email}
+              phone={item.phone}
             />
           ))}
         </ul>
