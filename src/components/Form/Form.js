@@ -1,65 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Form.css";
+import { createContact } from "../../store/contacts/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getFormValuesSelector } from "../../store/form/selectors";
+import { formError, formReset, formValuesSet } from "../../store/form/actions";
 
-function Form({ toggleForm, handleAddItem, showForm }) {
-  const [newContact, setNewContact] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    formError: "",
-    formValid: true,
-  });
+function Form() {
+  const dispatch = useDispatch();
+  const formValues = useSelector(getFormValuesSelector);
 
   const onInputChange = (e) => {
-    setNewContact({
-      ...newContact,
-      [e.target.name]: e.target.value,
-      formValid: true,
-    });
+    const { value, name } = e.target;
+    dispatch(
+      formValuesSet({
+        ...formValues,
+        [name]: value,
+      })
+    );
+  };
+
+  const resetForm = () => {
+    dispatch(formReset());
   };
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      newContact.name.length === 0 ||
-      newContact.email.length === 0 ||
-      newContact.phone.length === 0
-    ) {
-      setNewContact({
-        ...newContact,
-        formError: "*All fields are required",
-        formValid: false,
-      });
+    if (!formValues.name || !formValues.email || !formValues.phone) {
+      dispatch(formError());
       return;
     }
 
-    handleAddItem(newContact);
-
-    setNewContact({
-      name: "",
-      email: "",
-      phone: "",
-      formError: "",
-      formValid: true,
-    });
-  };
-
-  const cancelForm = () => {
-    toggleForm();
-
-    setNewContact({
-      name: "",
-      email: "",
-      phone: "",
-
-      formError: "",
-      formValid: true,
-    });
+    resetForm();
+    dispatch(createContact(formValues));
   };
 
   return (
-    <section className={`${showForm === false ? "disable" : "form"}`}>
+    <section
+      className={`${formValues.showForm === false ? "disable" : "form"}`}
+    >
       <div className="container form__container">
         <form className="form__area" onSubmit={onHandleSubmit}>
           <h2 className="form__title">Creating new contact</h2>
@@ -68,7 +47,7 @@ function Form({ toggleForm, handleAddItem, showForm }) {
               Name
               <input
                 className="form__input"
-                value={newContact.name}
+                value={formValues.name}
                 type="text"
                 name="name"
                 placeholder="Enter your name"
@@ -79,7 +58,7 @@ function Form({ toggleForm, handleAddItem, showForm }) {
               Email
               <input
                 className="form__input"
-                value={newContact.email}
+                value={formValues.email}
                 type="email"
                 name="email"
                 placeholder="Enter your email"
@@ -90,7 +69,7 @@ function Form({ toggleForm, handleAddItem, showForm }) {
               Phone number
               <input
                 className="form__input"
-                value={newContact.phone}
+                value={formValues.phone}
                 type="number"
                 name="phone"
                 placeholder="Enter your phone number"
@@ -98,18 +77,18 @@ function Form({ toggleForm, handleAddItem, showForm }) {
               />
             </fieldset>
           </div>
-          <div className="form__error-message">{newContact.formError}</div>
+          <div className="form__error-message">{formValues.formError}</div>
           <div className="form__button-wrapper">
             <button
               className="form__submit-button button"
-              disabled={!newContact.formValid}
+              disabled={!formValues.formValid}
             >
               Save
             </button>
             <button
               type={"reset"}
               className="form__cancel-button button"
-              onClick={cancelForm}
+              onClick={resetForm}
             >
               Cancel
             </button>

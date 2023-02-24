@@ -1,7 +1,11 @@
 import React from "react";
 import "./ContavtElement.css";
+import { removeContact } from "../../store/contacts/actions";
+import { useDispatch } from "react-redux";
 
-function ContactElement({ name, email, phone, id, removeListItem }) {
+function ContactElement({ name, email, phone, id }) {
+  const dispatch = useDispatch();
+
   return (
     <li className="contacts-item">
       <div className="contacts-item-cell">{name}</div>
@@ -9,8 +13,7 @@ function ContactElement({ name, email, phone, id, removeListItem }) {
       <div className="contacts-item-cell">{phone}</div>
       <button
         className="contacts-item-button"
-        onClick={(e) => removeListItem(e, id)}
-        key={id}
+        onClick={() => dispatch(removeContact(id))}
       >
         Х
       </button>

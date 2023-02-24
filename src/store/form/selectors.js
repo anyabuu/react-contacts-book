@@ -1,0 +1,1 @@
+export const getFormValuesSelector = (store) => store.form;

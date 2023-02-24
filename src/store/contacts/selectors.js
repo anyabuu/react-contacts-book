@@ -1,0 +1,1 @@
+export const getContactsSelector = (store) => store.contacts;

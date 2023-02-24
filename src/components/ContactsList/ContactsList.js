@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ContactsList.css";
 import ContactElement from "../ContactElement/ContactElement";
+import { useDispatch, useSelector } from "react-redux";
+import { getContactsSelector } from "../../store/contacts/selectors";
+import { fetchContacts } from "../../store/contacts/actions";
+import { formToggle } from "../../store/form/actions";
 
-function ContactsList({ items, removeListItem, toggleForm }) {
+function ContactsList() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, []);
+
+  const contacts = useSelector(getContactsSelector);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
+
+  const onToggle = () => {
+    dispatch(formToggle());
+  };
+
   return (
     <section className="contacts">
       <div className="container contacts__container">
@@ -14,20 +33,21 @@ function ContactsList({ items, removeListItem, toggleForm }) {
               Phone number
             </div>
           </li>
-          {items.map((item) => (
-            <ContactElement
-              removeListItem={removeListItem}
-              key={crypto.randomUUID()}
-              id={item.id}
-              name={item.name}
-              email={item.email}
-              phone={item.phone}
-            />
-          ))}
+          {contacts.map(({ id, name, email, phone }) => {
+            return (
+              <ContactElement
+                key={crypto.randomUUID()}
+                id={id}
+                name={name}
+                email={email}
+                phone={phone}
+              />
+            );
+          })}
         </ul>
         <button
           className="contacts__create-contact-button button"
-          onClick={toggleForm}
+          onClick={onToggle}
         >
           Add contact
         </button>
