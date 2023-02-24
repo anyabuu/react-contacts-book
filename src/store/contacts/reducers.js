@@ -4,8 +4,8 @@ import {
   ACTION_REMOVE_CONTACT,
 } from "./actions";
 
-const initialState = sessionStorage.contacts
-  ? JSON.parse(sessionStorage.contacts)
+const initialState = localStorage.contacts
+  ? JSON.parse(localStorage.contacts)
   : [];
 
 export function contactsReducer(state = initialState, { type, payload }) {

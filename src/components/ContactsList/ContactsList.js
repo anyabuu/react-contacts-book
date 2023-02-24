@@ -15,7 +15,7 @@ function ContactsList() {
   const contacts = useSelector(getContactsSelector);
 
   useEffect(() => {
-    window.sessionStorage.setItem("contacts", JSON.stringify(contacts));
+    window.localStorage.setItem("contacts", JSON.stringify(contacts));
   }, [contacts]);
 
   const onToggle = () => {
